@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from rental_shop.locador.models import Locador
+from locador.models import Locador
 
 
 class LocadorSerializer(ModelSerializer):

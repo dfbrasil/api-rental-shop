@@ -1,5 +1,5 @@
 from rest_framework.viewsets import ModelViewSet
-from rental_shop.item_pedido.models import ItemPedido
+from item_pedido.models import ItemPedido
 from .serializers import ItemPedidoSerializer
 
 

@@ -1,5 +1,5 @@
 from rest_framework.viewsets import ModelViewSet
-from rental_shop.locador.models import Locador
+from locador.models import Locador
 from .serializers import LocadorSerializer
 
 

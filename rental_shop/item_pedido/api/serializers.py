@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from rental_shop.item_pedido.models import ItemPedido
+from item_pedido.models import ItemPedido
 
 
 class ItemPedidoSerializer(ModelSerializer):

@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from rental_shop.transportadora.models import Transportadora
+from transportadora.models import Transportadora
 
 
 class TransportadoraSerializer(ModelSerializer):

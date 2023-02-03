@@ -1,5 +1,5 @@
 from rest_framework.viewsets import ModelViewSet
-from rental_shop.transportadora.models import Transportadora
+from transportadora.models import Transportadora
 from .serializers import TransportadoraSerializer
 
 

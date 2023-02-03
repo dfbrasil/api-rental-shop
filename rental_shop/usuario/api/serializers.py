@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from rental_shop.usuario.models import Usuario
+from usuario.models import Usuario
 
 
 class UsuarioSerializer(ModelSerializer):

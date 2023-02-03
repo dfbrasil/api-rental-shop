@@ -1,5 +1,5 @@
 from rest_framework.viewsets import ModelViewSet
-from rental_shop.usuario.models import Usuario
+from usuario.models import Usuario
 from .serializers import UsuarioSerializer
 
 
