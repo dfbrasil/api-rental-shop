@@ -1,6 +1,7 @@
 from django.db import models
 from item.models import Item
 
+
 class Estoque(models.Model):
 
     def __init__(self):

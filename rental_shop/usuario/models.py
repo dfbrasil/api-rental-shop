@@ -1,6 +1,7 @@
 from django.db import models
 from endereco.models import Endereco
 
+
 class Usuario(models.Model):
 
     nome = models.CharField(
@@ -20,7 +21,7 @@ class Usuario(models.Model):
     )
 
     tipo = models.CharField(
-        verbose_name='Nome do Produto',
+        verbose_name='Tipo do Usuário',
         choices=CHOICES_TIPO,
         max_length=20,
         blank=True, null=True,
