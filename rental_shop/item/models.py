@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Item(models.Model):
     # def __init__(self, ident: int, nome: str, preco: float, disponível: bool, dono: Locatario) -> None:
     # def __init__(self, ident: int, nome: str, preco: float, disponível: bool) -> None:
@@ -21,6 +22,11 @@ class Item(models.Model):
         verbose_name="Item disponível?",
         default=False,
         blank=True,null=True
+    )
+
+    foto = models.ImageField(
+        upload_to='itens', 
+        null=True, blank=True
     )
 
     def get_ident(self) -> int:
