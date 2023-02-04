@@ -1,4 +1,8 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+from item_pedido.models import ItemPedido
 
 # from item_pedido.models import ItemPedido
 
@@ -57,57 +61,25 @@ class Item(models.Model):
     def set_dono(self, novo_nome_dono) -> None:
         self.__dono = Locatario(novo_nome_dono)
 
+
+    @receiver(post_save, sender=ItemPedido)
+    def alterar_qts_itens(sender, instance, created, **kwargs):
+
+        item = (Item.objects.get(pk=instance.item.id))
+        pk = ItemPedido.objects.filter()
+        quantidade = item.quantidade
+        qtd_solicitada = ItemPedido.objects.get(item=item, id=pk).qtd
+        if qtd_solicitada <= item.quantidade:
+                item.quantidade_restante = quantidade - qtd_solicitada
+                item.save()
+
+        
     # dono = models.ForeignKey(
     #     Locatario,
     #     verbose_name="Dono do item",
     #     on_delete=models.SET_NULL,
     #     blank=True, null=True,
     # )
-
-    class ItemPedido(models.Model):
-
-        item = models.ForeignKey(
-            'item.Item',
-            on_delete = models.SET_NULL,
-            verbose_name = "Item: ",
-            blank = True, null = True,
-            related_name = "+"
-        )
-
-        qtd = models.IntegerField(
-            verbose_name = "Quantidade de itens: ",
-            blank=True, null= True,
-        )
-
-    # def get_item(self) -> str:
-    #     return self.__item
-
-    # def set_item(self, novo_nome_item: Item) -> None:
-    #     self.__item = Item(novo_nome_item)
-    
-        def get_qtd(self) -> int:
-            return self.__qtd
-
-        def set_qtd(self, qtd) -> None:
-            self.__qtd = qtd
-
-        def __str__(self) -> str:
-            return (f'Item: {self.item}\nQuantidade: {self.qtd}')
-
-
-    
-        
-        
-        def calcular_quantidade_restante(self):
-            try:
-                qtd_pedida = ItemPedido.objects.get().qtd
-                if qtd_pedida <= self.quantidade:
-                    self.quantidade_restante = self.quantidade - qtd_pedida
-                    self.save()
-                return self.quantidade_restante
-            except:
-                return print("Quantidade pedida é maior que a quantidade do estoque.")
-        
 
     def __str__(self) -> str:
         return (f'Nome do Item: {self.nome} - Preço do Item: {self.preco} - Disponível: {self.quantidade_restante}')
