@@ -18,7 +18,7 @@ class Item(models.Model):
         blank=True, null=True,
     )
 
-    disponível = models.BooleanField(
+    disponivel = models.BooleanField(
         verbose_name="Item disponível?",
         default=False,
         blank=True,null=True

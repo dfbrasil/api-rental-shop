@@ -27,5 +27,15 @@ class ItemPedido(models.Model):
     def set_quantidade(self, quantidade) -> None:
         self.__quantidade = quantidade
 
+    def calcular_quantidade_restante(self):
+        try:
+            qtd_pedida = ItemPedido.objects.get().qtd
+            if qtd_pedida <= self.quantidade:
+                self.quantidade_restante = self.quantidade - qtd_pedida
+                self.save()
+            return self.quantidade_restante
+        except:
+            return print("Quantidade pedida é maior que a quantidade do estoque.")
+
     def __str__(self) -> str:
         return (f'Item: {self.item}\nQuantidade: {self.quantidade}')
