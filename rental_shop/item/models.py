@@ -20,6 +20,7 @@ class Item(models.Model):
     quantidade = models.IntegerField(
         blank=True, null=True,
         verbose_name = "Quantidade de itens",
+        default=0
     )
 
     preco = models.DecimalField(
@@ -35,10 +36,16 @@ class Item(models.Model):
         blank=True,null=True
     )
 
+    quantidade_pedida = models.IntegerField(
+        blank=True, null=True,
+        verbose_name = "Quantidade de itens pedidos",
+    )
+
     quantidade_restante = models.IntegerField(
         blank=True, null=True,
-        verbose_name = "Quantidade de itens restantes",
+        verbose_name = "Quantidade restatnte de itens",
     )
+
 
     def get_ident(self) -> int:
         return self.__id
@@ -62,16 +69,38 @@ class Item(models.Model):
         self.__dono = Locatario(novo_nome_dono)
 
 
-    @receiver(post_save, sender=ItemPedido)
+    import logging
+
+    @receiver(post_save, sender=quantidade_pedida)
     def alterar_qts_itens(sender, instance, created, **kwargs):
 
         item = (Item.objects.get(pk=instance.item.id))
-        pk = ItemPedido.objects.filter()
-        quantidade = item.quantidade
-        qtd_solicitada = ItemPedido.objects.get(item=item, id=pk).qtd
-        if qtd_solicitada <= item.quantidade:
-                item.quantidade_restante = quantidade - qtd_solicitada
+
+        try:
+            if item.quantidade > 0:
+                item.quantidade_restante -= item.quantidade - item.quantidade_pedida
+                item.disponivel = True
                 item.save()
+            else:
+                item.disponivel = False
+                item.save()
+            
+        except BaseException:
+            logging.exception("Quantidade solicidada maiorque a disponível!")
+
+
+
+
+
+
+        #     return
+        # except:
+        #     return
+
+        # qtd_solicitada = ItemPedido.objects.get(item=item).qtd
+        # if qtd_solicitada <= item.quantidade:
+        #         item.quantidade_restante = quantidade - qtd_solicitada
+                
 
         
     # dono = models.ForeignKey(
@@ -82,6 +111,6 @@ class Item(models.Model):
     # )
 
     def __str__(self) -> str:
-        return (f'Nome do Item: {self.nome} - Preço do Item: {self.preco} - Disponível: {self.quantidade_restante}')
+        return (f'Nome do Item: {self.nome} - Preço do Item: {self.preco} - Disponível: {self.quantidade}')
 
     

@@ -9,6 +9,7 @@ class ItemAdmin(admin.ModelAdmin):
         'nome',
         'preco',
         'quantidade',
+        'disponivel',
         ]
 
     search_fields = [
