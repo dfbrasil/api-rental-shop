@@ -1,18 +1,31 @@
 from django.db import models
 from usuario.models import Usuario
-# from item.models import Item
+from item.models import Item
 from estoque.models import Estoque
 # from carrinho.models import Carrinho
 # from item_pedido.models import ItemPedido
 
 class Locador(models.Model):
 
-   
+    nome_locador = models.ForeignKey(
+        Usuario,
+        on_delete = models.SET_NULL,
+        verbose_name="nome do locador",
+        null=True,blank=True,    
+    )
 
-    itens_escolhidos = models.ManyToManyField(
-        'item.Item',
-        blank=True,
+    # itens_escolhidos = models.ManyToManyField(
+    #     'item.Item',
+    #     blank=True,
+    #     verbose_name= "lista de itens:",
+    # )
+
+    quantidade = models.PositiveIntegerField()
+
+    produto = models.ManyToManyField(
+        Item,
         verbose_name= "lista de itens:",
+        blank=True,    
     )
 
     def get_itens_escolhidos(self) -> list['Item']:
@@ -35,3 +48,8 @@ class Locador(models.Model):
     def adicionar_item(self, item: 'Item') -> bool:
         self.set_itens_escolhidos([*self.__itens_escolhidos, item])
         return True
+
+    # locadores = Usuario.objects.filter(tipo='1')
+
+    def __str__(self):
+        return f'Nome: {self.nome_locador.nome}\n'

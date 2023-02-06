@@ -6,6 +6,12 @@ from endereco.models import Endereco
 from django.db import models
 class Locatario(models.Model):
 
+    nome_locatario = models.ForeignKey(
+        Usuario,
+        verbose_name= "Nome do locatário: ",
+        on_delete = models.SET_NULL,
+        blank=True,null=True,
+    )
 
     def enviar_itens(self, estoque: 'Estoque') -> bool:
         entregou = False
@@ -15,5 +21,5 @@ class Locatario(models.Model):
                 entregou = True
         return entregou
 
-    # def __str__(self):
-    #     return f'Nome: {self.get_nome}\n'
+    def __str__(self):
+        return f'Nome: {self.nome_locatario.nome}\n'

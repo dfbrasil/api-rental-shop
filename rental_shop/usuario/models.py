@@ -5,7 +5,6 @@ from endereco.models import Endereco
 class Usuario(models.Model):
 
     
-
     nome = models.CharField(
         max_length=150,
         verbose_name = "Nome: ",
@@ -18,8 +17,8 @@ class Usuario(models.Model):
     )
 
     CHOICES_TIPO = (
-        ('1', 'Locador'),
-        ('2', 'Locatário'),
+        (1, 'Locador'),
+        (2, 'Locatário'),
     )
 
     tipo = models.CharField(
@@ -79,44 +78,6 @@ class Usuario(models.Model):
 
     """ getters e setters """
 
-    def get_nome(self) -> str:
-        return self.__nome
-
-    def set_nome(self, nome) -> None:
-        self.__nome = nome
-
-    def get_cpf_ou_cnpj(self) -> str:
-        return self.__cpf_ou_cnpj
-
-    def set_cpf_ou_cnpj(self, cpf_ou_cnpj) -> None:
-        self.__cpf_ou_cnpj = cpf_ou_cnpj
-
-    def get_tipo(self) -> int:
-        return self.__tipo
-
-    def set_tipo(self, tipo) -> None:
-        self.__tipo = tipo
-
-    def get_email(self) -> str:
-        return self.__email
-
-    def set_email(self, email) -> None:
-        self.__email = email
-
-    def get_senha(self) -> str:
-        return self.__senha
-
-    def set_senha(self, senha) -> None:
-        self.__senha = senha
-
-    def get_logado(self):
-        return self.__logado
-
-    def get_endereco(self):
-        return self.__endereco
-
-    def set_endereco(self, endereco) -> None:
-        self.__endereco = endereco
 
     def __str__(self) -> str:
-        return (f"Usuário: {self.__nome}\nCPF/CNPJ: {self.__cpf_ou_cnpj}\nTipo: {self.__tipo}\nEmail: {self.__email}\nSenha: {self.__senha}\nEndereço: {self.__endereco} ")
+        return (f"Usuário: {self.nome}\nCPF/CNPJ: {self.cpf_cnpj}\nTipo: {self.tipo}\nEmail: {self.email}\nSenha: {self.senha}\nEndereço: {self.endereco} ")

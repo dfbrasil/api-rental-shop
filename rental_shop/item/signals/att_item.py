@@ -9,7 +9,7 @@ def alterar_qts_itens(sender, instance, **kwargs):
     item = (Item.objects.get(id=instance.id))
 
     try:
-        if item.quantidade > 0 and item.quantidade_pedida < item.quantidade:
+        if item.quantidade > 0 and item.quantidade_pedida <= item.quantidade:
             item.quantidade_restante = item.quantidade
             item.quantidade_restante -= item.quantidade_pedida
             item.quantidade = item.quantidade_restante
