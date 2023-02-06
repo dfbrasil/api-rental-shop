@@ -40,14 +40,14 @@ INSTALLED_APPS = [
     "rest_framework",
     'corsheaders',
     "item",
-    "item_pedido",
+    # "item_pedido",
     "locatario",
     "locador",
-    "carrinho",
+    # "carrinho",
     "usuario",
     "endereco",
     "estoque",
-    "transportadora",
+    # "transportadora",
 
 ]
 

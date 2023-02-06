@@ -8,18 +8,24 @@ class ItemAdmin(admin.ModelAdmin):
         'id',
         'nome',
         'preco',
+        'quantidade',
+        'disponivel',
         ]
 
     search_fields = [
         'id',
         'nome',
         'preco',
-            
         ]
 
     list_filter = [
         'id',
         'nome',
         'preco',
+        'quantidade'
             
         ]
+
+    readonly_fields = [
+        'quantidade_restante',
+    ]

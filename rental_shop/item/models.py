@@ -1,14 +1,19 @@
 from django.db import models
+from locatario.models import Locatario
 
 
 class Item(models.Model):
-    # def __init__(self, ident: int, nome: str, preco: float, disponível: bool, dono: Locatario) -> None:
-    # def __init__(self, ident: int, nome: str, preco: float, disponível: bool) -> None:
-        
+    
     nome = models.CharField(
         max_length=150,
         blank=True, null=True,
         verbose_name = "Nome do item",
+    )
+
+    quantidade = models.IntegerField(
+        blank=True, null=True,
+        verbose_name = "Quantidade de itens",
+        default=0
     )
 
     preco = models.DecimalField(
@@ -18,45 +23,86 @@ class Item(models.Model):
         blank=True, null=True,
     )
 
-    disponível = models.BooleanField(
+    disponivel = models.BooleanField(
         verbose_name="Item disponível?",
         default=False,
         blank=True,null=True
     )
 
-    foto = models.ImageField(
-        upload_to='itens', 
-        null=True, blank=True
+    dono = models.ForeignKey(
+        Locatario,
+        verbose_name="Dono do item",
+        on_delete=models.SET_NULL,
+        blank=True, null=True,
     )
 
-    def get_ident(self) -> int:
-        return self.__id
+    alugado = models.BooleanField(
+        verbose_name="Item alugado?",
+        default=False,
+        blank=True,null=True
+    )
 
-    def set_ident(self, ident) -> None:
-        self.__id = ident
+    entregue = models.BooleanField(
+        verbose_name="Item entregue?",
+        default=False,
+        blank=True,null=True
+    )
+
+    quantidade_pedida = models.IntegerField(
+        blank=True, null=True,
+        verbose_name = "Quantidade de itens pedidos",
+    )
+
+    quantidade_restante = models.IntegerField(
+        blank=True, null=True,
+        verbose_name = "Quantidade restatnte de itens",
+    )
+
+    midia = models.ImageField(
+        verbose_name = 'Fotos e Documentos',
+        upload_to = 'imagens',
+        blank = True, null = True,
+    )
+
+
+    def get_alugado(self) -> bool:
+        return self.alugado
+    
+    def set_alugado(self, alugado: bool) -> None: 
+        self.alugado = alugado
+
+    def get_entregue(self) -> bool:
+        return self.entregue
+
+    def set_entregue(self, entregue: bool) -> None:
+        self.entregue = entregue
+
+    def get_disponivel(self) -> bool:
+        return self.disponivel
+    
+    def set_disponivel(self, disponivel: bool) -> None:
+        self.disponivel = disponivel
 
     def get_nome(self) -> str:
-        return self.__nome
+        return self.nome
 
     def set_nome(self, nome) -> None:
-        self.__nome = nome
+        self.nome = nome
 
     def get_preco(self) -> float:
-        return self.__preco
+        return self.preco
 
-    def get_dono(self) -> str:
-        return self.__dono
+    def get_dono(self):
+        return self.dono
 
-    def set_dono(self, novo_nome_dono) -> None:
-        self.__dono = Locatario(novo_nome_dono)
-
-    # dono = models.ForeignKey(
-    #     Locatario,
-    #     verbose_name="Dono do item",
-    #     on_delete=models.SET_NULL,
-    #     blank=True, null=True,
-    # )
-       
+    def set_dono(self, novo_dono) -> None:
+        self.dono = novo_dono
+               
 
     def __str__(self) -> str:
-        return (f'Nome do Item: {self.nome} - Preço do Item: {self.preco} - Disponível: {self.disponível}')
+        return (f'Nome do Item: {self.nome} - Preço do Item: {self.preco} - Disponível: {self.quantidade}')
+
+    # def __str__(self) -> str:
+    #     return (f'ID: {self.id}\nNome do Item: {self.nome}\nPreço do Item: {self.preco}\nDono do Item: {self.dono.get_nome()}')
+
+    

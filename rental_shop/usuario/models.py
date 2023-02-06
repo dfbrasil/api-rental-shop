@@ -1,7 +1,10 @@
 from django.db import models
 from endereco.models import Endereco
 
+
 class Usuario(models.Model):
+
+    
 
     nome = models.CharField(
         max_length=150,
@@ -20,7 +23,7 @@ class Usuario(models.Model):
     )
 
     tipo = models.CharField(
-        verbose_name='Nome do Produto',
+        verbose_name='Tipo do Usuário',
         choices=CHOICES_TIPO,
         max_length=20,
         blank=True, null=True,
@@ -48,6 +51,33 @@ class Usuario(models.Model):
         verbose_name="Endereço do usuário: ",
         blank=True, null= True,
     )
+
+    """
+        Método logar - autenticação do usuário; 
+        Recebe email e senha como parâmetros;
+        Retorna True se o usuário conseguir logar, caso contrário retorna False.    
+    """
+
+    def logar(self, email, senha) -> bool:
+        if self.get_email() == email and self.get_senha() == senha:
+            self.__logado = True
+            return True
+        else:
+            return False
+
+    """
+        Método enviar_itens - método abstrato que é implementado por Locador e Locatário
+        Encaminha o(s) item/itens para a entrega
+        Caso seja chamado pelo locador, realiza a devolução do item
+        Caso seja chamado pelo locatário, realiza a entrega para empréstimo do item
+    """
+
+    # VER SE RECEBE O CARRINHO COMO PARÂMETRO MESMO. SE SIM, MUDAR NO DIAGRAMA
+    def enviar_itens(self):
+        # implementar aqui
+        pass
+
+    """ getters e setters """
 
     def get_nome(self) -> str:
         return self.__nome
@@ -82,31 +112,11 @@ class Usuario(models.Model):
     def get_logado(self):
         return self.__logado
 
-    def get_endereco(self) -> Endereco:
+    def get_endereco(self):
         return self.__endereco
 
     def set_endereco(self, endereco) -> None:
         self.__endereco = endereco
 
-    def logar(self, email, senha):
-        if self.get_email() == email and self.get_senha() == senha:
-            self.__logado = True
-            print("Usuário logado!")
-        else:
-            self.__logado = False
-            print("Os dados estão incorretos. Tente novamente.")
-
-    """
-        Método enviar_itens - método abstrato que é implementado por Locador e Locatário
-        Encaminha o(s) item/itens para a entrega
-        Caso seja chamado pelo locador, realiza a devolução do item
-        Caso seja chamado pelo locatário, realiza a entrega para empréstimo do item
-    """
-
-    # VER SE RECEBE O CARRINHO COMO PARÂMETRO MESMO. SE SIM, MUDAR NO DIAGRAMA
-    # def enviar_itens(self, carrinho: Locador.Carrinho):
-    #     # implementar aqui
-    #     pass
-
     def __str__(self) -> str:
-        return (f"Usuário: {self.nome}\nCPF/CNPJ: {self.cpf_cnpj}\nTipo: {self.tipo}\nEmail: {self.email}\nSenha: {self.senha}\nEndereço: {self.endereco} ")
+        return (f"Usuário: {self.__nome}\nCPF/CNPJ: {self.__cpf_ou_cnpj}\nTipo: {self.__tipo}\nEmail: {self.__email}\nSenha: {self.__senha}\nEndereço: {self.__endereco} ")
