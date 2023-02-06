@@ -78,7 +78,7 @@ class Item(models.Model):
 
         try:
             if item.quantidade > 0:
-                item.quantidade_restante -= item.quantidade - item.quantidade_pedida
+                item.quantidade_restante = item.quantidade - item.quantidade_pedida
                 item.disponivel = True
                 item.save()
             else:
